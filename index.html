@@ -10,45 +10,25 @@
 <body>
     <h1 contenteditable='true' style='border:10px solid; padding:4px; margin :6px;' class='class01 class2'
         data-basic='dataset_basic'>solution
-
     </h1>
     <p>bubble sort</p>
+
     <script>
-        function binarySearch(arr, val) {
+        function bubbleSort(arr) {
 
-            let mid;
-            let midValue = 0;
-
-            function helper(arr) {
-                console.log(arr)
-                mid = Math.floor((arr.length) / 2);
-                console.log('mid', mid)
-                //base case
-                while (arr.length !== 0) {
-                    if (arr.length === 1 && arr[mid] !== val) {
-                        return
+            for (let i = arr.length; i > 0; i--) {
+                for (let j = 0; j.length < i - 1; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
                     }
-
-                    if (arr[mid] === val) {
-                        return midValue = arr[mid];
-                    }
-                    else if (arr[mid] < val) {
-                        arr = arr.slice(mid);
-                    } else if (arr[mid] > val) {
-                        arr = arr.slice(0, mid);
-                    }
-
-                    return helper(arr)
                 }
             }
 
-            helper(arr)
-
-            return arr.indexOf(midValue)
+            return arr;
         }
 
-        const answer = binarySearch([1, 3, 6, 8, 11, 15, 60, 50], 10)
-        console.log(answer);
+        const result = bubbleSort([1, 3, 5, 7, 11, 15, 19, 20])
+        console.log(result)
     </script>
 </body>
 
