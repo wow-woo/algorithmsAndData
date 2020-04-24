@@ -1,0 +1,31 @@
+***
+linear search
+순서대로 앞에서 부터 하나씩 체크.
+
+
+Array.prototype.includes( whatSearchFor , searchStartPoint)
+[1, 2, 3].includes(3, -1);  // true
+
+
+Array.prototype.indexOf( whatSearchFor )
+
+index number를 반환
+없으면 -1 반환.
+
+
+
+Array.prototype.find( callback(item, index, arrayitself)  , thisObject )
+만족하는 첫 번째 index number를 반환
+없으면 undefined
+find very first item matched callback
+
+
+
+
+Array.prototype.find( callback(item, index, arrayitself)  , thisObject ) 
+만족하는 첫 번째 index number를 반환
+없으면 -1 반환.
+
+The findIndex() method returns the index of the first element 
+in the array that satisfies the provided testing function. 
+Otherwise, it returns -1, indicating that no element passed the test.
