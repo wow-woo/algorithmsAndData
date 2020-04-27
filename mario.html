@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>super mario</title>
+    <style>
+        img {
+            width: 150px;
+            height: 250px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>mario game</h1>
+    <img id='mario'
+        src="https://lh3.googleusercontent.com/proxy/8wohi-0jZnh3n7wwojVVzJWHRAImXcDxm-GfDXkF_jCaIoV1mtZKUUjj-x5v7UB8OTtJKsNezbV5IROtZPpxpQvxNbeyD2Pm9PuhouURizqf_fgxnR6TJUJvzWu0vGejLEFxfxTvSz2Emy17IBaDlJkuxhhEYbNE0mmvkzcJsuhsVb6Sn4f_VNF4TOVdDPYJ9M6HZkHySqeiTWujfQ6TUBkeMwOIMZ4jFBIfqN0zP-CQZnXipsio7OaokGZzfDxX3nlxY7z9UIJmNaun1SxxAF1tGYIvpweDi-E"
+        alt="mario">
+
+    <script>
+        const mario_img = document.querySelector('#mario');
+        const browserWidth = window.innerWidth;
+        let distance = 0;
+        let walk = true;
+        let direction = 'right'
+
+        const move = () => {
+
+            if (direction === 'right') {
+
+                distance += 50;
+                mario_img.style.left = distance + 'px';
+            }
+            if (direction === 'left') {
+
+                distance -= 50;
+                mario_img.style.left = distance + 'px';
+            }
+
+            if (walk) {
+                mario_img.src = 'https://www.nintendo.co.kr/software/switch/adala/files/img/main/chara_mario.png'
+                walk = false;
+            } else {
+                mario_img.src = "https://lh3.googleusercontent.com/proxy/8wohi-0jZnh3n7wwojVVzJWHRAImXcDxm-GfDXkF_jCaIoV1mtZKUUjj-x5v7UB8OTtJKsNezbV5IROtZPpxpQvxNbeyD2Pm9PuhouURizqf_fgxnR6TJUJvzWu0vGejLEFxfxTvSz2Emy17IBaDlJkuxhhEYbNE0mmvkzcJsuhsVb6Sn4f_VNF4TOVdDPYJ9M6HZkHySqeiTWujfQ6TUBkeMwOIMZ4jFBIfqN0zP-CQZnXipsio7OaokGZzfDxX3nlxY7z9UIJmNaun1SxxAF1tGYIvpweDi-E";
+                walk = true;
+            }
+            console.log(distance)
+            console.log(browserWidth)
+
+            if (distance + 50 >= browserWidth) {
+                console.log('turn!')
+                direction = 'left'
+                mario_img.style.transform = 'rotateY(180deg)';
+            } else if (distance <= 0) {
+                console.log('turn!')
+                direction = 'right'
+                mario_img.style.transform = 'rotateY(360deg)';
+            }
+        }
+
+        setInterval(move, 280)
+
+    </script>
+</body>
+
+</html>

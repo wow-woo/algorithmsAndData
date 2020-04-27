@@ -14,20 +14,43 @@
     <p>bubble sort</p>
 
     <script>
-        function bubbleSort(arr) {
+        //inputs : array of numbers +-0
+        //ascending sort
+        //never include sorted item, that make you get the same value
+        //output  : sorted array
+        function selectionSort(arr) {
+            //edge case
+            if (arr.length === 0) {
+                return arr
+            }
 
-            for (let i = arr.length; i > 0; i--) {
-                for (let j = 0; j.length < i - 1; j++) {
-                    if (arr[j] > arr[j + 1]) {
-                        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+            for (let i = 0; i < arr.length; i++) {
+                let min_index = i;
+                let pointer = i + 1;
+
+                for (let j = i; j < arr.length; j++) {
+                    if (arr[min_index] > arr[pointer]) {
+                        min_index = pointer;
+                    } else {
+                        console.log('=')
                     }
+                    pointer++;
+
+                }
+
+                console.log(arr)
+                if (min_index !== i) {
+                    let min_value = arr[min_index];
+                    arr[min_index] = arr[i];
+                    arr[i] = min_value;
+                    console.log(arr)
                 }
             }
 
             return arr;
         }
 
-        const result = bubbleSort([1, 3, 5, 7, 11, 15, 19, 20])
+        const result = selectionSort([34, 22, 10, 19, 17, -5, 4, -66])
         console.log(result)
     </script>
 </body>
