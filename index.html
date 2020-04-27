@@ -18,45 +18,54 @@
         //marge and return
         //output  : sorted 1 array
         function merge(arr1, arr2) {
-            //edge case
-            if (arr1.length === 0 && arr2.length === 0) {
-                return [];
-            }
 
             let arr = [];
             let pointerI = 0;
             let pointerJ = 0;
-            while (arr1.length !== 0 || arr2.length !== 0) {
-                console.log('compare', arr1[pointerI], arr2[pointerJ])
+
+            while (pointerI < arr1.length && pointerJ < arr2.length) {
                 if (arr1[pointerI] < arr2[pointerJ]) {
-                    console.log(arr1[pointerI])
                     arr.push(arr1[pointerI]);
-                    arr1.shift();
-                    pointerI + 1;
+                    pointerI++;
+                    console.log(pointerI)
                 }
-                else if (arr2[pointerJ] <= arr1[pointerI]) {
-                    console.log(arr2[pointerJ])
+                else {
                     arr.push(arr2[pointerJ]);
-                    arr2.shift();
-                    pointerJ + 1;
-                } else {
-                    console.log('break')
-                    break;
+                    pointerJ++;
+                    console.log(pointerJ)
                 }
             }
 
-            if (arr1.length === 0) {
-                arr = [...arr, ...arr2]
+            while (pointerI < arr1.length) {
+                arr.push(arr1[pointerI])
+                pointerI++;
+                console.log(pointerI)
+
             }
-            if (arr2.length === 0) {
-                arr = [...arr, ...arr1]
+            while (pointerJ < arr2.length) {
+                arr.push(arr2[pointerJ])
+                pointerJ++;
+                console.log(pointerJ)
+
             }
 
             console.log('result', arr)
             return arr;
         }
-        const result = merge([3, 5, 40], [4, 7, 16, 30, 33])
-        console.log(result)
+
+        function mergeSort(arr) {
+            //base case 
+            if (arr.length <= 1) return arr;
+
+            const mid = Math.floor(arr.length / 2);
+            const left = mergeSort(arr.slice(0, mid))
+            const right = mergeSort(arr.slice(mid))
+            console.log('left', 'right', left, right)
+            return merge(left, right)
+        }
+
+        const sorted = mergeSort([3, 5, 40, 4, -30, 7, 16, 30, 33])
+        console.log(sorted)
     </script>
 </body>
 
