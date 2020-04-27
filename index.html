@@ -14,43 +14,48 @@
     <p>bubble sort</p>
 
     <script>
-        //inputs : array of numbers +-0
-        //ascending sort
-        //never include sorted item, that make you get the same value
-        //output  : sorted array
-        function selectionSort(arr) {
+        //inputs : 2 sorted arrays
+        //marge and return
+        //output  : sorted 1 array
+        function merge(arr1, arr2) {
             //edge case
-            if (arr.length === 0) {
-                return arr
+            if (arr1.length === 0 && arr2.length === 0) {
+                return [];
             }
 
-            for (let i = 0; i < arr.length; i++) {
-                let min_index = i;
-                let pointer = i + 1;
-
-                for (let j = i; j < arr.length; j++) {
-                    if (arr[min_index] > arr[pointer]) {
-                        min_index = pointer;
-                    } else {
-                        console.log('=')
-                    }
-                    pointer++;
-
+            let arr = [];
+            let pointerI = 0;
+            let pointerJ = 0;
+            while (arr1.length !== 0 || arr2.length !== 0) {
+                console.log('compare', arr1[pointerI], arr2[pointerJ])
+                if (arr1[pointerI] < arr2[pointerJ]) {
+                    console.log(arr1[pointerI])
+                    arr.push(arr1[pointerI]);
+                    arr1.shift();
+                    pointerI + 1;
                 }
-
-                console.log(arr)
-                if (min_index !== i) {
-                    let min_value = arr[min_index];
-                    arr[min_index] = arr[i];
-                    arr[i] = min_value;
-                    console.log(arr)
+                else if (arr2[pointerJ] <= arr1[pointerI]) {
+                    console.log(arr2[pointerJ])
+                    arr.push(arr2[pointerJ]);
+                    arr2.shift();
+                    pointerJ + 1;
+                } else {
+                    console.log('break')
+                    break;
                 }
             }
 
+            if (arr1.length === 0) {
+                arr = [...arr, ...arr2]
+            }
+            if (arr2.length === 0) {
+                arr = [...arr, ...arr1]
+            }
+
+            console.log('result', arr)
             return arr;
         }
-
-        const result = selectionSort([34, 22, 10, 19, 17, -5, 4, -66])
+        const result = merge([3, 5, 40], [4, 7, 16, 30, 33])
         console.log(result)
     </script>
 </body>
