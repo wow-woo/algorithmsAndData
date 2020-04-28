@@ -14,58 +14,47 @@
     <p>bubble sort</p>
 
     <script>
-        //inputs : 2 sorted arrays
-        //marge and return
-        //output  : sorted 1 array
-        function merge(arr1, arr2) {
+        // input: 1 array, start index, end index
+        function quickSort(arr) {
 
-            let arr = [];
-            let pointerI = 0;
-            let pointerJ = 0;
+            function helper(arr, start, end) {
+                console.log('start', start)
+                let pivot_index = start;
 
-            while (pointerI < arr1.length && pointerJ < arr2.length) {
-                if (arr1[pointerI] < arr2[pointerJ]) {
-                    arr.push(arr1[pointerI]);
-                    pointerI++;
-                    console.log(pointerI)
+                //base case
+                if (start >= end) {
+                    console.log('out')
+                    return;
                 }
-                else {
-                    arr.push(arr2[pointerJ]);
-                    pointerJ++;
-                    console.log(pointerJ)
+
+                for (let i = start + 1; i < arr.length; i++) {
+                    console.log(i)
+                    if (arr[start] > arr[i]) {
+                        pivot_index++;
+
+                        let temp = arr[i];
+                        arr[i] = arr[pivot_index];
+                        arr[pivot_index] = temp;
+
+                        console.log('for', arr)
+                    }
                 }
+                if (start !== pivot_index) {
+                    const temp = arr[pivot_index];
+                    arr[pivot_index] = arr[start];
+                    arr[start] = temp;
+                }
+                console.log(arr)
+                console.log('next loop!!')
+                const next = start + 1;
+                return helper(arr, next, end);
             }
+            helper(arr, 0, arr.length);
 
-            while (pointerI < arr1.length) {
-                arr.push(arr1[pointerI])
-                pointerI++;
-                console.log(pointerI)
-
-            }
-            while (pointerJ < arr2.length) {
-                arr.push(arr2[pointerJ])
-                pointerJ++;
-                console.log(pointerJ)
-
-            }
-
-            console.log('result', arr)
             return arr;
         }
-
-        function mergeSort(arr) {
-            //base case 
-            if (arr.length <= 1) return arr;
-
-            const mid = Math.floor(arr.length / 2);
-            const left = mergeSort(arr.slice(0, mid))
-            const right = mergeSort(arr.slice(mid))
-            console.log('left', 'right', left, right)
-            return merge(left, right)
-        }
-
-        const sorted = mergeSort([3, 5, 40, 4, -30, 7, 16, 30, 33])
-        console.log(sorted)
+        const result = quickSort([1, 23, 17, 26, 27, 47, 39, 42, 43, 44]);
+        console.log(result)
     </script>
 </body>
 
