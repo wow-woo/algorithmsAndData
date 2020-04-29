@@ -14,47 +14,92 @@
     <p>bubble sort</p>
 
     <script>
-        // input: 1 array, start index, end index
-        function quickSort(arr) {
-
-            function helper(arr, start, end) {
-                console.log('start', start)
-                let pivot_index = start;
-
-                //base case
-                if (start >= end) {
-                    console.log('out')
-                    return;
-                }
-
-                for (let i = start + 1; i < arr.length; i++) {
-                    console.log(i)
-                    if (arr[start] > arr[i]) {
-                        pivot_index++;
-
-                        let temp = arr[i];
-                        arr[i] = arr[pivot_index];
-                        arr[pivot_index] = temp;
-
-                        console.log('for', arr)
-                    }
-                }
-                if (start !== pivot_index) {
-                    const temp = arr[pivot_index];
-                    arr[pivot_index] = arr[start];
-                    arr[start] = temp;
-                }
-                console.log(arr)
-                console.log('next loop!!')
-                const next = start + 1;
-                return helper(arr, next, end);
+        class Node {
+            constructor(val) {
+                this.value = val;
+                this.next = null;
             }
-            helper(arr, 0, arr.length);
-
-            return arr;
         }
-        const result = quickSort([1, 23, 17, 26, 27, 47, 39, 42, 43, 44]);
-        console.log(result)
+
+        class SinglyLinkedList {
+            constructor() {
+                this.head = null;
+                this.length = 0;
+                this.tail = null;
+            }
+            push(val) {
+                const newNode = new Node(val);
+
+                if (this.length === 0) {
+
+                    this.head = newNode;
+                    this.tail = newNode;
+                } else {
+                    this.tail.next = newNode;
+                    this.tail = newNode;
+                }
+                this.length += 1;
+                return this;
+            }
+            pop() {
+                let node = this.head
+
+                if (this.length === 0) {
+                    this.head = null;
+                    this.tail = null;
+                    return undefined;
+                }
+
+                if (!node.next) {
+                    this.tail = null;
+                    this.length = 0;
+                    const removed = this.head.value;
+                    this.head = null;
+                    return removed;
+                }
+
+                while (node.next.next !== null) {
+                    node = node.next;
+                }
+
+                this.tail = node;
+                this.length -= 1;
+
+                const removed = node.next.value;
+                node.next = null;
+
+
+                return removed;
+            }
+            shift() {
+                if (!this.head) {
+                    return undefined
+                }
+                const shifted = this.head;
+                if (this.length === 0) {
+                    this.tail = null;
+                }
+                this.head = this.head.next;
+                this.length -= 1;
+                return shifted.value;
+            }
+            unshift(val) {
+                const newNode = new Node(val);
+
+                if (!this.head) {
+                    this.head = newNode;
+                    this.tail = this.head;
+                } else {
+                    newNode.next = this.head;
+                    this.head = newNode;
+                }
+                this.length += 1;
+                return this;
+            }
+        }
+
+        const singleList = new SinglyLinkedList();
+
     </script>
 </body>
 
