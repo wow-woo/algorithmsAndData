@@ -96,10 +96,22 @@
                 this.length += 1;
                 return this;
             }
+            get(index) {
+                if (0 > index || index >= this.length) {
+                    return null;
+                }
+
+                let current = this.head;
+                for (let i = 1; i <= index; i++) {
+                    current = current.next;
+                }
+                return current;
+
+            }
         }
 
         const singleList = new SinglyLinkedList();
-
+        console.log(singleList)
     </script>
 </body>
 
