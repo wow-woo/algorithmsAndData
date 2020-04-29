@@ -108,6 +108,15 @@
                 return current;
 
             }
+            set(index, val) {
+                const myNode = this.get(index)
+                if (!myNode) {
+                    return false
+                } else {
+                    myNode.value = val;
+                    return true;
+                }
+            }
         }
 
         const singleList = new SinglyLinkedList();
