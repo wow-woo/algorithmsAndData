@@ -154,14 +154,25 @@
                 this.length -= 1;
                 return target.value;
             }
+            reverse() {
+                let node = this.head;
+                this.head = this.tail;
+                this.tail = node;
+
+                let previousNode = null;
+                let nextNode = null;
+
+                for (let i = 0; i < this.length; i++) {
+                    nextNode = node.next;
+                    node.next = previousNode;
+                    previousNode = node;
+                    node = nextNode;
+                }
+                return this;
+            }
         }
 
         const singleList = new SinglyLinkedList();
-        console.log(singleList)
-        singleList.push('hello')
-        singleList.push('worldcup')
-        singleList.push('nice')
-        singleList.push('worldvision')
         console.log(singleList)
 
     </script>
