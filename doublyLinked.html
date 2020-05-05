@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cs mastering</title>
+</head>
+
+<body>
+    <h1 contenteditable='true' style='border:10px solid; padding:4px; margin :6px;' class='class01 class2'
+        data-basic='dataset_basic'>solution
+    </h1>
+    <p>DoublyLinkedList</p>
+
+    <script>
+        class Node {
+            constructor(val) {
+                this.value = val;
+                this.next = null;
+                this.previous = null;
+            }
+        }
+
+        class DoublyLinkedList {
+            constructor() {
+                this.head = null;
+                this.tail = null;
+                this.length = 0;
+            }
+
+            push(val) {
+                const node = new Node(val);
+
+                if (this.head === null && this.tail === null) {
+                    this.head = node;
+                    this.tail = node;
+                } else {
+                    node.previous = this.tail;
+                    this.tail.next = node;
+                    this.tail = node;
+                }
+
+                this.length++;
+                return this;
+            }
+            pop() {
+                if (this.length === 0) {
+                    return undefined;
+                }
+
+                let popped;
+                if (this.length === 1) {
+                    popped = this.tail;
+
+                    this.head = null;
+                    this.tail = null;
+                } else {
+                    popped = this.tail;
+
+                    this.tail.previous.next = null;
+                    this.tail = this.tail.previous;
+                }
+                this.length--;
+                popped.previous = null;
+                return popped;
+            }
+            shift() {
+                if (this.length === 0) {
+                    return undefined;
+                }
+
+                const shift = this.head;
+
+                if (this.length === 1) {
+                    this.head = null;
+                    this.tail = null;
+                } else {
+                    const newHead = shift.next;
+                    newHead.previous = null;
+                    this.head = newHead;
+                }
+
+                shift.next = null;
+                this.length--;
+                return shift;
+            }
+            unshift(val) {
+                const newNode = new Node(val);
+
+                if (this.length === 0) {
+                    this.head = newNode;
+                    this.tail = newNode;
+                } else {
+                    this.head.previous = newNode;
+                    newNode.next = this.head;
+                    this.head = newNode;
+                }
+
+                this.length++;
+                return this;
+            }
+            get(index) {
+                if (index < 0 || index >= this.length) {
+                    return null;
+                }
+                const half = Math.floor(this.length / 2);
+                let node;
+
+                if (index <= half) {
+                    node = this.head;
+                    for (let i = 0; i < index; i++) {
+                        node = node.next;
+                    }
+                } else {
+                    node = this.tail;
+                    for (let i = this.length - 1; i > index; i--) {
+                        node = node.previous;
+                    }
+                }
+                return node;
+            }
+            set(index, val) {
+                const node = this.get(index);
+                if (node !== null) {
+                    node.value = val;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        let doublyLinkedList = new DoublyLinkedList()
+        console.log(doublyLinkedList)
+
+
+    </script>
+</body>
+
+</html>
