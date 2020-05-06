@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>stack & que</title>
+</head>
+
+<body>
+    <h1>stack</h1>
+</body>
+
+<script>
+    class Node {
+        constructor(val) {
+            this.value = val;
+            this.next = null;
+        }
+    }
+    class Stack {
+        constructor() {
+            this.first = null;
+            this.last = null;
+            this.length = 0;
+        }
+        push(val) {
+            const node = new Node(val);
+            if (this.length === 0) {
+                this.first = node;
+                this.last = node;
+            } else {
+                node.next = this.first;
+                this.first = node;
+            }
+
+            this.length++;
+            return this.length;
+        }
+        pop() {
+            if (this.length === 0) {
+                return undefined;
+            }
+            const head = this.first;
+            if (this.length === 1) {
+                this.first = null;
+                this.last = null;
+            } else {
+                this.first = head.next;
+            }
+            head.next = null;
+            this.length--;
+            return head.value;
+        }
+    }
+
+    const stack = new Stack();
+</script>
+
+</html>

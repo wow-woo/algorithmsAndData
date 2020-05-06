@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> queue</title>
+</head>
+
+<body>
+    <h1>queue</h1>
+</body>
+
+<script>
+    class Node {
+        constructor(val) {
+            this.value = val;
+            this.next = null;
+        }
+    }
+    class Queue {
+        constructor() {
+            this.first = null;
+            this.last = null;
+            this.length = 0;
+        }
+        enqueue(val) {
+            const node = new Node(val)
+            if (this.length === 0) {
+                this.first = node;
+                this.last = node;
+            } else {
+                this.last.next = node;
+                this.last = node;
+            }
+            return ++this.length;
+        }
+        dequeue() {
+            if (this.length === 0) {
+                return null;
+            }
+            const head = this.first;
+            if (this.length === 1) {
+                this.last = null;
+                this.first = null;
+            } else {
+                this.first = head.next;
+                head.next = null;
+            }
+            this.length--;
+            return head;
+        }
+    }
+
+    const queue = new Queue();
+</script>
+
+</html>
