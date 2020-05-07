@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>binary search tree</title>
+</head>
+
+<body>
+    <h1>binary search tree</h1>
+
+    <script>
+        class Node {
+            constructor(val) {
+                this.value = val;
+                this.left = null;
+                this.right = null;
+            }
+        }
+        class Bst {
+            constructor() {
+                this.root = null;
+            }
+            insert(val) {
+                const node = new Node(val);
+
+                if (this.root === null) {
+                    this.root = node;
+                    return this;
+                }
+
+                let current = this.root;
+                while (true) {
+                    if (val === current.value) {
+                        return val;
+                    }
+
+                    if (val < current.value) {
+                        if (current.left === null) {
+                            current.left = node;
+                            return this;
+                        } else {
+                            current = current.left;
+                        }
+                    }
+
+                    if (val > current.value) {
+                        if (current.right === null) {
+                            current.right = node;
+                            return this;
+                        } else {
+                            current = current.right;
+                        }
+                    }
+
+                }
+            }
+
+            // // if (!this.root) {
+            // //     this.root = node;
+            // //     return this;
+            // // }
+
+            // const helper = (target) => {
+            //     //base case
+            //     //there is no node in searching spot
+            //     if (!target) {
+            //         target = node;
+            //         console.log('this', this)
+            //         return;
+            //     }
+
+            //     if (val > target.value) {
+            //         return helper(target.right)
+            //     }
+            //     else if (val < target.value) {
+            //         return helper(target.left)
+            //     }
+            //     else {
+            //         console.log(target)
+            //         return;
+            //     }
+            // }
+            // let target = this.root
+            // helper(target);
+
+            // return this;
+
+            find(val) {
+                if (this.root === null) {
+                    return undefined;
+                }
+                let current = this.root;
+                while (true) {
+                    if (val === current.value) {
+                        return val;
+                    }
+
+                    if (val < current.value) {
+                        if (current.left === null) {
+                            return undefined;
+                        } else {
+                            current = current.left;
+                        }
+                    }
+
+
+                    if (val > current.value) {
+                        if (current.right === null) {
+                            return undefined;
+                        } else {
+                            current = current.right;
+                        }
+                    }
+
+                }
+            }
+        }
+        const bst = new Bst();
+
+
+    </script>
+
+</body>
+
+</html>
