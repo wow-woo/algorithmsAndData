@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>binary tree</title>
+</head>
+
+<body>
+    <h1>binary tree - breath first traverse</h1>
+
+    <script>
+        class Node {
+            constructor(val) {
+                this.value = val;
+                this.left = null;
+                this.right = null;
+            }
+        }
+        class Bst {
+            constructor() {
+                this.root = null;
+                this.size = 0;
+            }
+            insert(val) {
+                const node = new Node(val);
+
+                if (this.root === null) {
+                    this.root = node;
+                    this.size++;
+                    return this;
+                }
+
+                let current = this.root;
+                while (true) {
+                    if (val === current.value) {
+                        return val;
+                    }
+
+                    if (val < current.value) {
+                        if (current.left === null) {
+                            current.left = node;
+                            this.size++;
+                            return this;
+                        } else {
+                            current = current.left;
+                        }
+                    }
+
+                    if (val > current.value) {
+                        if (current.right === null) {
+                            current.right = node;
+                            this.size++;
+                            return this;
+                        } else {
+                            current = current.right;
+                        }
+                    }
+
+                }
+            }
+
+            find(val) {
+                if (this.root === null) {
+                    return undefined;
+                }
+                let current = this.root;
+                while (true) {
+                    if (val === current.value) {
+                        return val;
+                    }
+
+                    if (val < current.value) {
+                        if (current.left === null) {
+                            return undefined;
+                        } else {
+                            current = current.left;
+                        }
+                    }
+
+
+                    if (val > current.value) {
+                        if (current.right === null) {
+                            return undefined;
+                        } else {
+                            current = current.right;
+                        }
+                    }
+
+                }
+            }
+
+            BFS() {
+                let queue = [];
+                let visited = [];
+                let site;
+                queue.push(this.root);
+                function helper(queue) {
+                    console.log('queue', queue)
+
+                    //base case
+                    if (queue.length === 0) {
+                        return visited;
+                    }
+
+                    for (let i = 0; i < queue.length; i++) {
+                        console.log(queue[i])
+                        if (queue[i].left) {
+                            queue.push(queue[i].left);
+                            console.log(queue[i].left, 'left')
+                        }
+                        if (queue[i].right) {
+                            queue.push(queue[i].right);
+                            console.log(queue[i].right, 'right')
+                        }
+                    }
+
+                    for (let j = 0; j < queue.length; j++) {
+                        site = queue.shift();
+                        console.log('shit', site)
+                        visited.push(site);
+                        console.log('push', visited)
+                    }
+
+                    console.log('loop!!!')
+                    return helper(queue);
+                }
+                helper(queue);
+
+                return visited;
+            }
+            DFS_pre() {
+                let data = [];
+                let current = this.root;
+
+                const helper = (current) => {
+                    data.push(current.value);
+
+                    if (current.left) {
+                        helper(current.left)
+                    }
+                    if (current.right) {
+                        helper(current.right)
+                    }
+                }
+
+                helper(current);
+
+                return data;
+            }
+            DFS_post() {
+                let data = [];
+                let current = this.root;
+
+                const helper = (current) => {
+                    if (current.left) {
+                        helper(current.left)
+                    }
+                    if (current.right) {
+                        helper(current.right)
+                    }
+
+                    data.push(current.value);
+                }
+
+                helper(current);
+
+                return data;
+            }
+            DFS_inOrder() {
+                let data = [];
+                let current = this.root;
+
+                const helper = (current) => {
+                    if (current.left) {
+                        helper(current.left)
+                    }
+
+                    data.push(current.value);
+
+                    if (current.right) {
+                        helper(current.right)
+                    }
+
+                }
+
+                helper(current);
+
+                return data;
+            }
+        }
+        const bst = new Bst();
+        bst.insert(10);
+        bst.insert(6);
+        bst.insert(3);
+        bst.insert(8);
+        bst.insert(15);
+        bst.insert(20);
+
+    </script>
+
+</body>
+
+</html>

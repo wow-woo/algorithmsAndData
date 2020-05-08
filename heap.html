@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>heap tree</title>
+</head>
+
+<body>
+    <h1>binary heap tree</h1>
+
+    <script>
+        class MaxHeap {
+            constructor() {
+                this.values = [41, 39, 33, 18, 27, 12];
+            }
+            insert(val) {
+                let currentIndex = this.values.length;
+                this.values.push(val);
+
+                function helper(heap, val) {
+                    let parentIndex = Math.floor((currentIndex - 1) / 2);
+
+                    if (val <= heap[parentIndex]) return;
+
+                    heap[currentIndex] = heap[parentIndex];
+                    heap[parentIndex] = val;
+                    currentIndex = parentIndex;
+
+                    //base case
+                    if (currentIndex === 0) {
+                        return;
+                    }
+                    return helper(heap, val);
+                }
+                helper(this.values, val);
+                return this;
+            }
+        }
+
+        const maxHeap = new MaxHeap();
+    </script>
+</body>
+
+</html>
