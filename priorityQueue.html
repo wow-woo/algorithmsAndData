@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>priority queue</title>
+</head>
+
+<body>
+    <h1>priority queue & min binary heap</h1>
+
+    <script>
+        class Node {
+            constructor(prior, val) {
+                this.prior = prior;
+                this.value = val;
+            }
+        }
+        class PriorityQueue {
+            constructor() {
+                this.values = [];
+            }
+            enqueue(prior, val) {
+                const newNode = new Node(prior, val);
+                this.values.push(newNode);
+                let currentIndex = this.values.length - 1;
+                let arr = this.values;
+
+                function bubbling() {
+                    let parentIndex = Math.floor((currentIndex - 1) / 2);
+
+                    console.log(prior, arr[parentIndex]?.prior)
+                    if (prior >= arr[parentIndex].prior) {
+                        return;
+                    }
+                    const parent = arr[parentIndex];
+                    arr[parentIndex] = arr[currentIndex];
+                    arr[currentIndex] = parent;
+                    currentIndex = parentIndex;
+
+                    //base case
+                    if (parentIndex <= 0) {
+                        return;
+                    }
+                    return bubbling();
+                }
+                if (this.values.length > 1) {
+                    bubbling();
+                }
+
+                return this;
+            }
+            dequeue() {
+                const arr = this.values;
+                const min = arr[0];
+                arr[0] = arr[arr.length - 1];
+                const target = arr[0];
+                arr.pop();
+
+                let currentIndex = 0;
+                function sink() {
+                    let leftIndex = currentIndex * 2 + 1;
+                    let rightIndex = currentIndex * 2 + 2;
+
+                    if (rightIndex >= arr.length) {
+                        return;
+                    }
+
+                    if (target.prior > arr[leftIndex].prior && target.prior > arr[rightIndex].prior) {
+                        if (arr[leftIndex].prior < arr[rightIndex].prior) {
+                            arr[currentIndex] = arr[leftIndex]
+                            arr[leftIndex] = target;
+                            currentIndex = leftIndex;
+                            return sink();
+                        } else {
+                            arr[currentIndex] = arr[leftIndex]
+                            arr[rightIndex] = target;
+                            currentIndex = rightIndex;
+                            return sink();
+                        }
+                    }
+                    if (target.prior > arr[leftIndex].prior) {
+                        arr[currentIndex] = arr[leftIndex]
+                        arr[leftIndex] = target;
+                        currentIndex = leftIndex;
+                        return sink();
+                    }
+                    if (target.prior > arr[rightIndex].prior) {
+                        arr[currentIndex] = arr[leftIndex]
+                        arr[rightIndex] = target;
+                        currentIndex = rightIndex;
+                        return sink();
+                    }
+                    return;
+                }
+                sink();
+
+                console.log(this);
+                return min;
+            }
+        }
+        const q = new PriorityQueue();
+        q.enqueue(5, 'common cold')
+        q.enqueue(1, 'gunshot wound')
+        q.enqueue(4, 'high fever')
+        q.enqueue(2, 'broken arm')
+        q.enqueue(3, 'glass in foot')
+
+
+    </script>
+</body>
+
+</html>

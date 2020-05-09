@@ -13,7 +13,7 @@
     <script>
         class MaxHeap {
             constructor() {
-                this.values = [41, 39, 33, 18, 27, 12];
+                this.values = [55, 39, 41, 18, 27, 12, 33];
             }
             insert(val) {
                 let currentIndex = this.values.length;
@@ -37,9 +37,59 @@
                 helper(this.values, val);
                 return this;
             }
+            extractMax() {
+                const max = this.values[0];
+                const target = this.values.pop();
+                if (this.values.length > 0) {
+                    this.values[0] = target;
+                }
+
+                let currentIndex = 0;
+                function helper(arr) {
+                    let left = currentIndex * 2 + 1;
+                    let right = currentIndex * 2 + 2;
+
+                    //base case
+                    if (right >= arr.length) {
+                        return;
+                    }
+                    if (target < arr[left] && target < arr[right]) {
+                        if (arr[left] > arr[right]) {
+                            arr[currentIndex] = arr[left];
+                            arr[left] = target;
+                            currentIndex = left;
+                            return helper(arr);
+                        } else {
+                            arr[currentIndex] = arr[right];
+                            arr[right] = target;
+                            currentIndex = right;
+                            return helper(arr);
+                        }
+                    }
+                    if (target < arr[left]) {
+                        arr[currentIndex] = arr[left];
+                        arr[left] = target;
+                        currentIndex = left;
+                        return helper(arr);
+                    }
+                    if (target < arr[right]) {
+                        arr[currentIndex] = arr[right];
+                        arr[right] = target;
+                        currentIndex = right;
+                        return helper(arr);
+                    }
+                    return;
+
+                }
+                helper(this.values);
+
+                console.log(this)
+                return max;
+            }
         }
 
         const maxHeap = new MaxHeap();
+
     </script>
 </body>
 
