@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hash table</title>
+</head>
+
+<body>
+    <h1>hash table</h1>
+    <h5>separate chaining</h5>
+
+    <script>
+        class HashTable {
+            constructor(size = 53) {
+                this.keyMap = new Array(size);
+            }
+
+            _hash(key) {
+                let total = 0;
+                let PRIME_NUMBER = 31;
+                for (let i = 0; i < Math.min(key.length, 100); i++) {
+                    let char = key[i];
+                    let values = char.charCodeAt(0) - 96;
+                    total = (total * PRIME_NUMBER + values) % this.keyMap.length;
+                }
+                return total;
+            }
+
+            set(key, value) {
+                //edge case
+                if (typeof key !== 'string') {
+                    return undefined;
+                }
+                if (!key || !value) {
+                    return undefined;
+                }
+
+                const hashed_number = this._hash(key);
+                if (!this.keyMap[hashed_number]) {
+                    this.keyMap[hashed_number] = [];
+                }
+
+                for (let item of this.keyMap[hashed_number]) {
+                    if (item[0] === key) {
+                        return item[1] = value;
+                    }
+                }
+
+                this.keyMap[hashed_number].push([key, value]);
+
+                return this.keyMap;
+            }
+            get(key) {
+                //edge case
+                if (typeof key !== 'string') {
+                    return undefined;
+                }
+                if (!key) {
+                    return undefined;
+                }
+
+                const hashed_number = this._hash(key);
+                if (!this.keyMap[hashed_number]) {
+                    console.log(1)
+                    return undefined;
+                }
+                else {
+                    let answer = undefined;
+                    this.keyMap[hashed_number].map(item => {
+                        if (item[0] === key) {
+                            answer = item[1];
+                        }
+                    })
+                    return answer;
+                }
+            }
+            key() {
+                let arr = [];
+                for (let i of this.keyMap) {
+                    if (i) {
+                        console.log(i)
+                        for (let j of i) {
+                            if (!arr.includes(j[0])) {
+                                arr.push(j[0])
+                            }
+                        }
+                    }
+                }
+                return arr;
+            }
+            values() {
+                let arr = [];
+                for (let i of this.keyMap) {
+                    if (i) {
+                        console.log(i)
+                        for (let j of i) {
+                            if (!arr.includes(j[1])) {
+                                arr.push(j[1])
+                            }
+                        }
+                    }
+                }
+                return arr;
+            }
+        }
+
+        const hash = new HashTable();
+        hash.set('hello', 30)
+        hash.set('world', 10)
+        hash.set('sexy', 70)
+        hash.set('bob', 90)
+        hash.set('kim', 5)
+        hash.set('chi', 5)
+    </script>
+</body>
+
+</html>
