@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>graph</title>
+</head>
+
+<body>
+    <h1>adjacency list</h1>
+
+    <script>
+        class Graph {
+            constructor() {
+                this.graphList = {};
+            }
+            addVertex(name) {
+                //edge case
+                const newName = name.toUpperCase();
+                // Object.assign(this.graphList, { [name]: [] })
+                if (!this.graphList[newName]) {
+                    this.graphList[newName] = [];
+                }
+            }
+            addEdge(vertex1, vertex2) {
+                //edge case
+                const v1 = vertex1.toUpperCase();
+                const v2 = vertex2.toUpperCase();
+
+                if (!v1 || !v2) {
+                    return undefined;
+                }
+                if (!this.graphList[v1] || !this.graphList[v2]) {
+                    return undefined;
+                }
+
+                if (!this.graphList[v1].includes(v2)) {
+                    this.graphList[v1].push(v2);
+                }
+                if (!this.graphList[v2].includes(v1)) {
+                    this.graphList[v2].push(v1);
+                }
+                return this.graphList;
+            }
+            removeEdge(vertex1, vertex2) {
+                //edge case
+                const v1 = vertex1.toUpperCase();
+                const v2 = vertex2.toUpperCase();
+
+                if (!v1 || !v2) {
+                    return undefined;
+                }
+
+                if (this.graphList[v1].length !== 0) {
+                    let sub1 = [];
+                    this.graphList[v1].map(item => {
+                        if (item !== v2) {
+                            sub1.push(item)
+                        }
+                    })
+                    this.graphList[v1] = sub1;
+                }
+
+                if (this.graphList[v2].length !== 0) {
+                    let sub2 = [];
+                    this.graphList[v2].map(item => {
+                        if (item !== v1) {
+                            sub2.push(item)
+                        }
+                    })
+                    this.graphList[v2] = sub2;
+                }
+
+                return this.graphList;
+            }
+            removeVertex(name) {
+                if (!name) {
+                    return undefined;
+                }
+
+                const newName = name.toUpperCase();
+
+                // this.graphList[newName].map(item => {
+                //     this.removeEdge(newName, item);
+                // })
+                while (this.graphList[newName].length !== 0) {
+                    let pop = this.graphList[newName].pop();
+                    console.log(pop)
+                    this.removeEdge(newName, pop);
+                }
+
+                // let obj = {};
+                // for (let key in this.graphList) {
+                //     if (key !== newName) {
+                //         Object.assign(obj, { [key]: this.graphList[key] });
+                //     }
+                // }
+                // this.graphList = obj;
+                delete this.graphList[newName];
+
+                return this.graphList;
+            }
+        }
+
+        const graph = new Graph();
+        graph.addVertex('FUKUOKA')
+        graph.addVertex('INCHEON')
+        graph.addVertex('ROME')
+        graph.addVertex('RUSSIA')
+
+        graph.addEdge('INCHEON', 'FUKUOKA')
+        graph.addEdge('INCHEON', 'ROME')
+        graph.addEdge('INCHEON', 'RUSSIA')
+        graph.addEdge('ROME', 'RUSSIA')
+    </script>
+</body>
+
+</html>
