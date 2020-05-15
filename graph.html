@@ -13,14 +13,14 @@
     <script>
         class Graph {
             constructor() {
-                this.graphList = {};
+                this.adjacencyList = {};
             }
             addVertex(name) {
                 //edge case
                 const newName = name.toUpperCase();
-                // Object.assign(this.graphList, { [name]: [] })
-                if (!this.graphList[newName]) {
-                    this.graphList[newName] = [];
+                // Object.assign(this.adjacencyList, { [name]: [] })
+                if (!this.adjacencyList[newName]) {
+                    this.adjacencyList[newName] = [];
                 }
             }
             addEdge(vertex1, vertex2) {
@@ -31,17 +31,17 @@
                 if (!v1 || !v2) {
                     return undefined;
                 }
-                if (!this.graphList[v1] || !this.graphList[v2]) {
+                if (!this.adjacencyList[v1] || !this.adjacencyList[v2]) {
                     return undefined;
                 }
 
-                if (!this.graphList[v1].includes(v2)) {
-                    this.graphList[v1].push(v2);
+                if (!this.adjacencyList[v1].includes(v2)) {
+                    this.adjacencyList[v1].push(v2);
                 }
-                if (!this.graphList[v2].includes(v1)) {
-                    this.graphList[v2].push(v1);
+                if (!this.adjacencyList[v2].includes(v1)) {
+                    this.adjacencyList[v2].push(v1);
                 }
-                return this.graphList;
+                return this.adjacencyList;
             }
             removeEdge(vertex1, vertex2) {
                 //edge case
@@ -52,27 +52,27 @@
                     return undefined;
                 }
 
-                if (this.graphList[v1].length !== 0) {
+                if (this.adjacencyList[v1].length !== 0) {
                     let sub1 = [];
-                    this.graphList[v1].map(item => {
+                    this.adjacencyList[v1].map(item => {
                         if (item !== v2) {
                             sub1.push(item)
                         }
                     })
-                    this.graphList[v1] = sub1;
+                    this.adjacencyList[v1] = sub1;
                 }
 
-                if (this.graphList[v2].length !== 0) {
+                if (this.adjacencyList[v2].length !== 0) {
                     let sub2 = [];
-                    this.graphList[v2].map(item => {
+                    this.adjacencyList[v2].map(item => {
                         if (item !== v1) {
                             sub2.push(item)
                         }
                     })
-                    this.graphList[v2] = sub2;
+                    this.adjacencyList[v2] = sub2;
                 }
 
-                return this.graphList;
+                return this.adjacencyList;
             }
             removeVertex(name) {
                 if (!name) {
@@ -81,39 +81,62 @@
 
                 const newName = name.toUpperCase();
 
-                // this.graphList[newName].map(item => {
+                // this.adjacencyList[newName].map(item => {
                 //     this.removeEdge(newName, item);
                 // })
-                while (this.graphList[newName].length !== 0) {
-                    let pop = this.graphList[newName].pop();
+                while (this.adjacencyList[newName].length !== 0) {
+                    let pop = this.adjacencyList[newName].pop();
                     console.log(pop)
                     this.removeEdge(newName, pop);
                 }
 
                 // let obj = {};
-                // for (let key in this.graphList) {
+                // for (let key in this.adjacencyList) {
                 //     if (key !== newName) {
-                //         Object.assign(obj, { [key]: this.graphList[key] });
+                //         Object.assign(obj, { [key]: this.adjacencyList[key] });
                 //     }
                 // }
-                // this.graphList = obj;
-                delete this.graphList[newName];
+                // this.adjacencyList = obj;
+                delete this.adjacencyList[newName];
 
-                return this.graphList;
+                return this.adjacencyList;
+            }
+            DF(start) {
+                const vertex = start.toUpperCase();
+
+                const visited = {};
+                const result = [];
+                const allList = this.adjacencyList;
+                (function helper(vertex) {
+                    visited[vertex] = true;
+                    result.push(vertex);
+
+                    allList[vertex].forEach(neighbor => {
+                        if (!visited[neighbor]) {
+                            helper(neighbor);
+                        }
+                    })
+                })(vertex);
+
+                return result;
             }
         }
 
         const graph = new Graph();
-        graph.addVertex('FUKUOKA')
-        graph.addVertex('INCHEON')
-        graph.addVertex('ROME')
-        graph.addVertex('RUSSIA')
+        graph.addVertex('a')
+        graph.addVertex('b')
+        graph.addVertex('c')
+        graph.addVertex('d')
+        graph.addVertex('e')
+        graph.addVertex('f')
 
-        graph.addEdge('INCHEON', 'FUKUOKA')
-        graph.addEdge('INCHEON', 'ROME')
-        graph.addEdge('INCHEON', 'RUSSIA')
-        graph.addEdge('ROME', 'RUSSIA')
-        graph.addEdge('ROME', 'FUKUOKA')
+        graph.addEdge('a', 'b')
+        graph.addEdge('a', 'c')
+        graph.addEdge('b', 'd')
+        graph.addEdge('c', 'e')
+        graph.addEdge('d', 'e')
+        graph.addEdge('d', 'f')
+        graph.addEdge('e', 'f')
     </script>
 </body>
 
